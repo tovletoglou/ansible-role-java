@@ -1,0 +1,17 @@
+---
+
+- name: Install Java
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - "{{ java_packages }}"
+
+- name: Check if we use the corect ({{ java_version }}) Java version
+  shell: java -version 2>&1 | awk '/version/{print $NF}' | tr -d '"' | sed 's/_.*//'
+  register: current_version
+  failed_when: current_version.stdout != "{{ java_version }}"
+  changed_when: false # This will never report 'changed' status. But it will report 'ok', 'unreachable' or 'failed'
+
+# - debug:
+#     msg: "{{ current_version.stdout }} {{ java_version }}"

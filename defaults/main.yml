@@ -1,0 +1,8 @@
+---
+
+# Define the openJDK vesion
+java_version: "1.8.0"
+
+# List of packages
+java_packages:
+  - java-{{ java_version }}-openjdk
